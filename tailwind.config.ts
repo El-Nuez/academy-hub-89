@@ -13,7 +13,16 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
       colors: {
+        institucional: {
+          azul: "hsl(var(--institucional-azul))",
+          verde: "hsl(var(--institucional-verde))",
+          blanco: "hsl(var(--institucional-blanco))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -57,6 +66,15 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      boxShadow: {
+        'institucional-sm': 'var(--shadow-sm)',
+        'institucional-md': 'var(--shadow-md)',
+        'institucional-lg': 'var(--shadow-lg)',
+      },
+      backgroundImage: {
+        'gradient-primary': 'var(--gradient-primary)',
+        'gradient-secondary': 'var(--gradient-secondary)',
       },
       borderRadius: {
         lg: "var(--radius)",
