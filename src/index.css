@@ -99,3 +99,173 @@ All colors MUST be HSL.
     font-family: 'Poppins', sans-serif;
   }
 }
+
+/* ===== UTILIDADES INSTITUCIONALES ===== */
+
+@layer utilities {
+  /* Gradientes */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .bg-gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  /* Sombras institucionales */
+  .shadow-institucional-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-institucional-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-institucional-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Animación hover lift */
+  .hover-lift {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Animación hover suave */
+  .hover-scale {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* ===== COMPONENTES PERSONALIZADOS ===== */
+
+@layer components {
+  /* Mejoras para tablas */
+  tbody tr {
+    @apply transition-all duration-200;
+  }
+
+  tbody tr:hover {
+    @apply bg-accent/5;
+    transform: scale(1.002);
+  }
+
+  /* Mejoras para botones */
+  .btn-institucional {
+    @apply transition-all duration-300 shadow-institucional-sm;
+  }
+
+  .btn-institucional:hover {
+    @apply shadow-institucional-md;
+    transform: translateY(-2px);
+  }
+
+  .btn-institucional:active {
+    transform: translateY(0);
+  }
+
+  /* Cards con borde animado */
+  .stat-card {
+    @apply relative overflow-hidden bg-card rounded-xl p-6;
+    @apply shadow-institucional-sm transition-all duration-300;
+    @apply border-l-4 border-secondary cursor-pointer;
+  }
+
+  .stat-card:hover {
+    @apply shadow-institucional-lg;
+    transform: translateY(-5px);
+  }
+
+  /* Input focus mejorado */
+  input:focus,
+  textarea:focus {
+    @apply ring-2 ring-primary/20 border-primary;
+  }
+
+  /* Badge mejorado */
+  .badge-institucional {
+    @apply inline-flex items-center px-3 py-1 rounded-full;
+    @apply text-xs font-semibold uppercase tracking-wider;
+    @apply transition-all duration-200 hover:scale-105;
+  }
+
+  /* Navegación con indicador */
+  .nav-link {
+    @apply relative px-7 py-3 font-medium rounded-lg;
+    @apply transition-all duration-300 hover:bg-accent/10 hover:-translate-y-0.5;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 -translate-x-1/2;
+    @apply w-0 h-0.5 bg-secondary transition-all duration-300;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-4/5;
+  }
+
+  /* Container principal mejorado */
+  .main-container {
+    @apply bg-card rounded-2xl p-8 shadow-institucional-md;
+    @apply transition-shadow duration-300 hover:shadow-institucional-lg;
+  }
+
+  /* Sección header con línea decorativa */
+  .section-header {
+    @apply flex items-center gap-3 mb-6 pb-4 border-b-2 border-border;
+  }
+
+  .section-header::before {
+    content: '';
+    @apply w-1 h-7 bg-gradient-secondary rounded-full;
+  }
+
+  /* Table wrapper mejorado */
+ .table-institucional {
+  @apply overflow-x-visible rounded-xl border border-border;
+  @apply shadow-institucional-sm hover:shadow-institucional-md;
+  @apply transition-shadow duration-300;
+}
+}
+
+/* ===== ANIMACIONES PERSONALIZADAS ===== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
