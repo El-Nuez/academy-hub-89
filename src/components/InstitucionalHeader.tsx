@@ -12,7 +12,7 @@ const InstitucionalHeader = ({
       <div className="flex items-center gap-5">
         {/* Aquí se coloca el logo institucional */}
         <img
-          src="src\logo.jpeg"
+          src="public\logo.jpeg"
           alt="Logo institucional"
           className="h-12 w-auto object-contain"
         />
