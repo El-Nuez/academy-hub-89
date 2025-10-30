@@ -33,9 +33,11 @@ const Admin = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("panel");
   const [activeCatalogoTab, setActiveCatalogoTab] = useState("planteles");
+  const [activeUsuarioTab, setActiveUsuarioTab] = useState("alumnos");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("todos");
   const [activeReportTab, setActiveReportTab] = useState("estadisticas");
+  
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -110,6 +112,35 @@ const Admin = () => {
     { clave: "DEPT-008", nombre: "Dirección Académica", jefe: "Dr. Miguel Ángel Pérez", extension: "108", email: "academica@cecytea.edu.mx", personal: 6, plantel: "Ferrocarriles", estado: "Activo" }
   ];
 
+  // Datos de alumnos
+  const alumnos = [
+    { matricula: "20250001", nombre: "Juan Carlos Pérez López", programa: "Sistemas Computacionales", semestre: 4, plantel: "Ferrocarriles", telefono: "449-123-5001", email: "juan.perez@alumno.cecytea.edu.mx", estado: "Activo", promedio: 9.2 },
+    { matricula: "20250002", nombre: "María Guadalupe Martínez", programa: "Contabilidad", semestre: 2, plantel: "Aguascalientes", telefono: "449-123-5002", email: "maria.martinez@alumno.cecytea.edu.mx", estado: "Activo", promedio: 8.8 },
+    { matricula: "20250003", nombre: "José Antonio García Ruiz", programa: "Electrónica", semestre: 6, plantel: "Ferrocarriles", telefono: "449-123-5003", email: "jose.garcia@alumno.cecytea.edu.mx", estado: "Activo", promedio: 9.5 },
+    { matricula: "20250004", nombre: "Ana Laura Sánchez Torres", programa: "Enfermería", semestre: 4, plantel: "Aguascalientes", telefono: "449-123-5004", email: "ana.sanchez@alumno.cecytea.edu.mx", estado: "Activo", promedio: 9.0 },
+    { matricula: "20250005", nombre: "Carlos Eduardo Ramírez", programa: "Mecatrónica", semestre: 2, plantel: "Calvillo", telefono: "449-123-5005", email: "carlos.ramirez@alumno.cecytea.edu.mx", estado: "Activo", promedio: 8.5 },
+    { matricula: "20240156", nombre: "Sofía Alejandra Hernández", programa: "Administración", semestre: 6, plantel: "Jesús María", telefono: "449-123-5006", email: "sofia.hernandez@alumno.cecytea.edu.mx", estado: "Baja Temporal", promedio: 7.8 },
+  ];
+
+  // Datos de profesores
+  const profesores = [
+    { clave: "PROF-001", nombre: "Dr. Roberto Carlos Mendoza", especialidad: "Matemáticas y Física", plantel: "Ferrocarriles", telefono: "449-234-6001", email: "roberto.mendoza@cecytea.edu.mx", estado: "Activo", antiguedad: "15 años", materiasAsignadas: 4 },
+    { clave: "PROF-002", nombre: "Ing. Patricia Verónica López", especialidad: "Sistemas Computacionales", plantel: "Ferrocarriles", telefono: "449-234-6002", email: "patricia.lopez@cecytea.edu.mx", estado: "Activo", antiguedad: "8 años", materiasAsignadas: 3 },
+    { clave: "PROF-003", nombre: "Lic. Fernando Javier Ruiz", especialidad: "Contabilidad y Finanzas", plantel: "Aguascalientes", telefono: "449-234-6003", email: "fernando.ruiz@cecytea.edu.mx", estado: "Activo", antiguedad: "12 años", materiasAsignadas: 5 },
+    { clave: "PROF-004", nombre: "Mtra. Laura Cristina Morales", especialidad: "Enfermería", plantel: "Aguascalientes", telefono: "449-234-6004", email: "laura.morales@cecytea.edu.mx", estado: "Activo", antiguedad: "6 años", materiasAsignadas: 3 },
+    { clave: "PROF-005", nombre: "Ing. Miguel Ángel Ramírez", especialidad: "Electrónica", plantel: "Ferrocarriles", telefono: "449-234-6005", email: "miguel.ramirez@cecytea.edu.mx", estado: "Activo", antiguedad: "10 años", materiasAsignadas: 4 },
+    { clave: "PROF-006", nombre: "Lic. Sandra Gabriela Torres", especialidad: "Humanidades", plantel: "Calvillo", telefono: "449-234-6006", email: "sandra.torres@cecytea.edu.mx", estado: "Licencia", antiguedad: "5 años", materiasAsignadas: 2 },
+  ];
+
+  // Datos de administradores
+  const administradores = [
+    { clave: "ADM-001", nombre: "Mtra. Verónica Herrera Díaz", cargo: "Directora General", plantel: "Oficinas Centrales", telefono: "449-345-7001", email: "veronica.herrera@cecytea.edu.mx", estado: "Activo", departamento: "Dirección General" },
+    { clave: "ADM-002", nombre: "Lic. Jorge Alberto Ramírez", cargo: "Coordinador de RH", plantel: "Oficinas Centrales", telefono: "449-345-7002", email: "jorge.ramirez@cecytea.edu.mx", estado: "Activo", departamento: "Recursos Humanos" },
+    { clave: "ADM-003", nombre: "Mtra. Laura Patricia Gómez", cargo: "Coordinadora de Servicios", plantel: "Ferrocarriles", telefono: "449-345-7003", email: "laura.gomez@cecytea.edu.mx", estado: "Activo", departamento: "Servicios Escolares" },
+    { clave: "ADM-004", nombre: "Ing. Fernando López Castro", cargo: "Jefe de Sistemas", plantel: "Oficinas Centrales", telefono: "449-345-7004", email: "fernando.lopez@cecytea.edu.mx", estado: "Activo", departamento: "Sistemas" },
+    { clave: "ADM-005", nombre: "Lic. Ana María Torres", cargo: "Coordinadora de Biblioteca", plantel: "Ferrocarriles", telefono: "449-345-7005", email: "ana.torres@cecytea.edu.mx", estado: "Activo", departamento: "Biblioteca" },
+  ];
+
   // Función de filtrado para planteles
 const filteredPlanteles = planteles.filter(plantel => {
   const matchSearch = plantel.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -153,6 +184,40 @@ const filteredDepartamentos = departamentos.filter(depto => {
   return depto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
          depto.clave.toLowerCase().includes(searchTerm.toLowerCase()) ||
          depto.jefe.toLowerCase().includes(searchTerm.toLowerCase());
+});
+
+// Funciones de filtrado para usuarios
+const filteredAlumnos = alumnos.filter(alumno => {
+  const matchSearch = alumno.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      alumno.matricula.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      alumno.programa.toLowerCase().includes(searchTerm.toLowerCase());
+  
+  const matchStatus = filterStatus === "todos" || 
+                      alumno.estado.toLowerCase() === filterStatus.toLowerCase();
+  
+  return matchSearch && matchStatus;
+});
+
+const filteredProfesores = profesores.filter(profesor => {
+  const matchSearch = profesor.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      profesor.clave.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      profesor.especialidad.toLowerCase().includes(searchTerm.toLowerCase());
+  
+  const matchStatus = filterStatus === "todos" || 
+                      profesor.estado.toLowerCase() === filterStatus.toLowerCase();
+  
+  return matchSearch && matchStatus;
+});
+
+const filteredAdministradores = administradores.filter(admin => {
+  const matchSearch = admin.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      admin.clave.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      admin.cargo.toLowerCase().includes(searchTerm.toLowerCase());
+  
+  const matchStatus = filterStatus === "todos" || 
+                      admin.estado.toLowerCase() === filterStatus.toLowerCase();
+  
+  return matchSearch && matchStatus;
 });
 
   const renderCatalogo = () => {
@@ -671,90 +736,339 @@ const filteredDepartamentos = departamentos.filter(depto => {
         </table>
       </div>
 
-      <div className="flex gap-3 mt-6 flex-wrap">
-        <Button className="btn-institucional bg-gradient-primary text-primary-foreground group">
-          <Download className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-          Exportar Reporte General
-        </Button>
-        <Button className="btn-institucional bg-gradient-secondary text-secondary-foreground group">
-          <FileText className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-          Generar Estadísticas
-        </Button>
-      </div>
+      
     </div>
   );
 
-      case "usuarios":
+     case "usuarios":
         return (
           <div className="animate-fade-in">
-            <div className="flex justify-between items-center mb-6">
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <Input placeholder="Buscar usuario..." className="pl-10" />
-              </div>
-              <Button className="btn-institucional bg-gradient-primary text-primary-foreground group">
-                <PlusCircle className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                Agregar Usuario
+            {/* Botones de sub-navegación de usuarios */}
+            <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
+              <Button 
+                onClick={() => {
+                  setActiveUsuarioTab("alumnos");
+                  setSearchTerm("");
+                  setFilterStatus("todos");
+                }} 
+                className={`
+                  btn-institucional transition-all duration-300 group btn-with-icon
+                  ${activeUsuarioTab === "alumnos" 
+                    ? "bg-gradient-primary text-primary-foreground shadow-institucional-md" 
+                    : "bg-gradient-secondary text-secondary-foreground hover:shadow-institucional-sm"
+                  }
+                `}
+              >
+                <GraduationCap className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                Alumnos
+              </Button>
+              <Button 
+                onClick={() => {
+                  setActiveUsuarioTab("profesores");
+                  setSearchTerm("");
+                  setFilterStatus("todos");
+                }} 
+                className={`
+                  btn-institucional transition-all duration-300 group btn-with-icon
+                  ${activeUsuarioTab === "profesores" 
+                    ? "bg-gradient-primary text-primary-foreground shadow-institucional-md" 
+                    : "bg-gradient-secondary text-secondary-foreground hover:shadow-institucional-sm"
+                  }
+                `}
+              >
+                <BookOpen className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                Profesores
+              </Button>
+              <Button 
+                onClick={() => {
+                  setActiveUsuarioTab("administradores");
+                  setSearchTerm("");
+                  setFilterStatus("todos");
+                }} 
+                className={`
+                  btn-institucional transition-all duration-300 group btn-with-icon
+                  ${activeUsuarioTab === "administradores" 
+                    ? "bg-gradient-primary text-primary-foreground shadow-institucional-md" 
+                    : "bg-gradient-secondary text-secondary-foreground hover:shadow-institucional-sm"
+                  }
+                `}
+              >
+                <UserCog className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                Administradores
               </Button>
             </div>
 
-            <div className="table-institucional">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-gradient-primary text-primary-foreground">
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider">Nombre</th>
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider">Correo</th>
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider">Tipo</th>
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider">Estado</th>
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="hover:bg-accent/5 transition-all duration-200">
-                    <td className="px-4 py-4 border-b border-border">Juan Pérez Martínez</td>
-                    <td className="px-4 py-4 border-b border-border">juan.perez@cecytea.edu.mx</td>
-                    <td className="px-4 py-4 border-b border-border"><Badge variant="info">Profesor</Badge></td>
-                    <td className="px-4 py-4 border-b border-border"><Badge variant="success">Activo</Badge></td>
-                    <td className="px-4 py-4 border-b border-border">
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="hover-scale group">
-                          <UserCog className="w-3 h-3 mr-1 group-hover:scale-110 transition-transform" />
-                          Editar
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-accent/5 transition-all duration-200">
-                    <td className="px-4 py-4 border-b border-border">María López García</td>
-                    <td className="px-4 py-4 border-b border-border">maria.lopez@cecytea.edu.mx</td>
-                    <td className="px-4 py-4 border-b border-border"><Badge variant="info">Alumno</Badge></td>
-                    <td className="px-4 py-4 border-b border-border"><Badge variant="success">Activo</Badge></td>
-                    <td className="px-4 py-4 border-b border-border">
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="hover-scale group">
-                          <UserCog className="w-3 h-3 mr-1 group-hover:scale-110 transition-transform" />
-                          Editar
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-accent/5 transition-all duration-200">
-                    <td className="px-4 py-4 border-b border-border">Carlos Ramírez Soto</td>
-                    <td className="px-4 py-4 border-b border-border">carlos.ramirez@cecytea.edu.mx</td>
-                    <td className="px-4 py-4 border-b border-border"><Badge variant="info">Administrativo</Badge></td>
-                    <td className="px-4 py-4 border-b border-border"><Badge variant="warning">Pendiente</Badge></td>
-                    <td className="px-4 py-4 border-b border-border">
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="hover-scale group">
-                          <UserCog className="w-3 h-3 mr-1 group-hover:scale-110 transition-transform" />
-                          Revisar
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {/* Contenido según la pestaña de usuario */}
+            {activeUsuarioTab === "alumnos" && (
+              <div className="animate-fade-in">
+                <div className="flex flex-wrap gap-3 mb-6 items-center justify-between">
+                  <div className="flex gap-3 flex-1 min-w-[300px]">
+                    <div className="relative flex-1">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Input
+                        placeholder="Buscar alumno por nombre, matrícula o programa..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                    <select 
+                      className="px-4 py-2 rounded-lg border border-border bg-card text-primary"
+                      value={filterStatus}
+                      onChange={(e) => setFilterStatus(e.target.value)}
+                    >
+                      <option value="todos">Todos los estados</option>
+                      <option value="activo">Activos</option>
+                      <option value="baja temporal">Baja Temporal</option>
+                      <option value="baja">Baja Definitiva</option>
+                    </select>
+                  </div>
+                  <Button className="btn-institucional bg-gradient-primary text-primary-foreground group">
+                    <PlusCircle className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                    Agregar Alumno
+                  </Button>
+                </div>
+
+                <div className="mb-4 text-sm text-muted-foreground">
+                  Mostrando {filteredAlumnos.length} de {alumnos.length} alumnos
+                </div>
+
+                <div className="table-institucional">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-gradient-primary text-primary-foreground">
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Matrícula</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Nombre</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Programa</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Semestre</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Plantel</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Promedio</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Estado</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredAlumnos.length > 0 ? (
+                        filteredAlumnos.map((alumno) => (
+                          <tr key={alumno.matricula} className="hover:bg-accent/5 transition-all duration-200">
+                            <td className="px-4 py-4 border-b border-border"><strong className="text-primary">{alumno.matricula}</strong></td>
+                            <td className="px-4 py-4 border-b border-border font-medium">{alumno.nombre}</td>
+                            <td className="px-4 py-4 border-b border-border text-sm">{alumno.programa}</td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <Badge variant="info">{alumno.semestre}°</Badge>
+                            </td>
+                            <td className="px-4 py-4 border-b border-border text-sm">{alumno.plantel}</td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <strong className={alumno.promedio >= 8.5 ? "text-green-600" : alumno.promedio >= 7.0 ? "text-primary" : "text-destructive"}>
+                                {alumno.promedio.toFixed(1)}
+                              </strong>
+                            </td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <Badge variant={alumno.estado === "Activo" ? "success" : "warning"}>
+                                {alumno.estado.toUpperCase()}
+                              </Badge>
+                            </td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <div className="flex gap-2">
+                                <Button size="sm" variant="outline" className="hover-scale group" title="Ver detalles">
+                                  <Eye className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                                </Button>
+                                <Button size="sm" variant="outline" className="hover-scale group" title="Editar">
+                                  <Edit className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={8} className="px-4 py-8 text-center text-muted-foreground">
+                            No se encontraron alumnos con los criterios de búsqueda
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {activeUsuarioTab === "profesores" && (
+              <div className="animate-fade-in">
+                <div className="flex flex-wrap gap-3 mb-6 items-center justify-between">
+                  <div className="flex gap-3 flex-1 min-w-[300px]">
+                    <div className="relative flex-1">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Input
+                        placeholder="Buscar profesor por nombre, clave o especialidad..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                    <select 
+                      className="px-4 py-2 rounded-lg border border-border bg-card text-primary"
+                      value={filterStatus}
+                      onChange={(e) => setFilterStatus(e.target.value)}
+                    >
+                      <option value="todos">Todos los estados</option>
+                      <option value="activo">Activos</option>
+                      <option value="licencia">En Licencia</option>
+                      <option value="inactivo">Inactivos</option>
+                    </select>
+                  </div>
+                  <Button className="btn-institucional bg-gradient-primary text-primary-foreground group">
+                    <PlusCircle className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                    Agregar Profesor
+                  </Button>
+                </div>
+
+                <div className="mb-4 text-sm text-muted-foreground">
+                  Mostrando {filteredProfesores.length} de {profesores.length} profesores
+                </div>
+
+                <div className="table-institucional">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-gradient-primary text-primary-foreground">
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Clave</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Nombre</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Especialidad</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Plantel</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Antigüedad</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Materias</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Estado</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredProfesores.length > 0 ? (
+                        filteredProfesores.map((profesor) => (
+                          <tr key={profesor.clave} className="hover:bg-accent/5 transition-all duration-200">
+                            <td className="px-4 py-4 border-b border-border"><strong className="text-primary">{profesor.clave}</strong></td>
+                            <td className="px-4 py-4 border-b border-border font-medium">{profesor.nombre}</td>
+                            <td className="px-4 py-4 border-b border-border text-sm">{profesor.especialidad}</td>
+                            <td className="px-4 py-4 border-b border-border text-sm">{profesor.plantel}</td>
+                            <td className="px-4 py-4 border-b border-border">{profesor.antiguedad}</td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <Badge variant="info">{profesor.materiasAsignadas}</Badge>
+                            </td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <Badge variant={profesor.estado === "Activo" ? "success" : "warning"}>
+                                {profesor.estado.toUpperCase()}
+                              </Badge>
+                            </td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <div className="flex gap-2">
+                                <Button size="sm" variant="outline" className="hover-scale group" title="Ver detalles">
+                                  <Eye className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                                </Button>
+                                <Button size="sm" variant="outline" className="hover-scale group" title="Editar">
+                                  <Edit className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={8} className="px-4 py-8 text-center text-muted-foreground">
+                            No se encontraron profesores con los criterios de búsqueda
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {activeUsuarioTab === "administradores" && (
+              <div className="animate-fade-in">
+                <div className="flex flex-wrap gap-3 mb-6 items-center justify-between">
+                  <div className="flex gap-3 flex-1 min-w-[300px]">
+                    <div className="relative flex-1">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Input
+                        placeholder="Buscar administrador por nombre, clave o cargo..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                    <select 
+                      className="px-4 py-2 rounded-lg border border-border bg-card text-primary"
+                      value={filterStatus}
+                      onChange={(e) => setFilterStatus(e.target.value)}
+                    >
+                      <option value="todos">Todos los estados</option>
+                      <option value="activo">Activos</option>
+                      <option value="inactivo">Inactivos</option>
+                    </select>
+                  </div>
+                  <Button className="btn-institucional bg-gradient-primary text-primary-foreground group">
+                    <PlusCircle className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                    Agregar Administrador
+                  </Button>
+                </div>
+
+                <div className="mb-4 text-sm text-muted-foreground">
+                  Mostrando {filteredAdministradores.length} de {administradores.length} administradores
+                </div>
+
+                <div className="table-institucional">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-gradient-primary text-primary-foreground">
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Clave</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Nombre</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Cargo</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Departamento</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Plantel</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Email</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Estado</th>
+                        <th className="px-4 py-4 text-left text-xs font-semibold uppercase">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredAdministradores.length > 0 ? (
+                        filteredAdministradores.map((admin) => (
+                          <tr key={admin.clave} className="hover:bg-accent/5 transition-all duration-200">
+                            <td className="px-4 py-4 border-b border-border"><strong className="text-primary">{admin.clave}</strong></td>
+                            <td className="px-4 py-4 border-b border-border font-medium">{admin.nombre}</td>
+                            <td className="px-4 py-4 border-b border-border text-sm">{admin.cargo}</td>
+                            <td className="px-4 py-4 border-b border-border text-sm">{admin.departamento}</td>
+                            <td className="px-4 py-4 border-b border-border text-sm">{admin.plantel}</td>
+                            <td className="px-4 py-4 border-b border-border text-xs">{admin.email}</td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <Badge variant={admin.estado === "Activo" ? "success" : "destructive"}>
+                                {admin.estado.toUpperCase()}
+                              </Badge>
+                            </td>
+                            <td className="px-4 py-4 border-b border-border">
+                              <div className="flex gap-2">
+                                <Button size="sm" variant="outline" className="hover-scale group" title="Ver detalles">
+                                  <Eye className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                                </Button>
+                                <Button size="sm" variant="outline" className="hover-scale group" title="Editar">
+                                  <Edit className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={8} className="px-4 py-8 text-center text-muted-foreground">
+                            No se encontraron administradores con los criterios de búsqueda
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
         );
 
